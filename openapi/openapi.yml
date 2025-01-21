@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: Pokémon Battle Simulator API
+  version: 1.0.0
+  description: >
+    API documentation for the Pokémon Battle Simulator backend. 
+    This API allows users to retrieve random Pokémon, simulate battles between them, and view battle history.
+  contact:
+    name: Balazs Ferenczi
+    email: ferenczibalazs0309@gmail.com
+
+servers:
+  - url: http://localhost:8081
+    description: Local development server
+
+paths:
+  /api/pokemons/random:
+    get:
+      summary: Retrieve Two Random Pokémon
+      description: >
+        Fetches two randomly selected Pokémon, each with their name, type, image URL, and strength.
+      operationId: getRandomPokemons
+      tags:
+        - Pokémon
+      responses:
+        '200':
+          description: Successfully retrieved two random Pokémon.
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 2
+                maxItems: 2
+                items:
+                  $ref: '#/components/schemas/PokemonDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/battle/simulate:
+    post:
+      summary: Simulate a Battle Between Two Pokémon
+      description: >
+        Simulates a battle between two specified Pokémon based on their types and strengths. Determines the winner and records the battle history.
+      operationId: simulateBattle
+      tags:
+        - Battle
+      parameters:
+        - in: query
+          name: pokemon1
+          schema:
+            type: string
+          required: true
+          description: Name of the first Pokémon participating in the battle.
+        - in: query
+          name: pokemon2
+          schema:
+            type: string
+          required: true
+          description: Name of the second Pokémon participating in the battle.
+      responses:
+        '200':
+          description: Battle simulated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BattleResultDTO'
+        '404':
+          description: Pokémon Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/history:
+    get:
+      summary: Retrieve Battle History
+      description: >
+        Fetches the history of all simulated battles, including details of each Pokémon, the winner, and the date of the battle.
+      operationId: getBattleHistory
+      tags:
+        - Battle History
+      responses:
+        '200':
+          description: Successfully retrieved battle history.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BattleHistoryDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    PokemonDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the Pokémon.
+        type:
+          type: string
+          description: Primary type of the Pokémon.
+        image:
+          type: string
+          format: uri
+          description: URL to the Pokémon's image.
+        strength:
+          type: integer
+          description: Strength value of the Pokémon.
+      required:
+        - name
+        - type
+        - image
+        - strength
+
+    BattleResultDTO:
+      type: object
+      properties:
+        pokemon1:
+          $ref: '#/components/schemas/PokemonDTO'
+        pokemon2:
+          $ref: '#/components/schemas/PokemonDTO'
+        winner:
+          type: string
+          description: Name of the winning Pokémon.
+        date:
+          type: string
+          format: date-time
+          description: Date and time when the battle occurred in ISO 8601 format.
+      required:
+        - pokemon1
+        - pokemon2
+        - winner
+        - date
+
+    BattleHistoryDTO:
+      type: object
+      properties:
+        pokemon1:
+          $ref: '#/components/schemas/PokemonDTO'
+        pokemon2:
+          $ref: '#/components/schemas/PokemonDTO'
+        winner:
+          type: string
+          description: Name of the winning Pokémon.
+        date:
+          type: string
+          format: date-time
+          description: Date and time when the battle occurred in ISO 8601 format.
+      required:
+        - pokemon1
+        - pokemon2
+        - winner
+        - date
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message detailing what went wrong.
+      required:
+        - message

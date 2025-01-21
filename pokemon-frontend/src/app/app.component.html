@@ -1,0 +1,17 @@
+<!-- src/app/app.component.html -->
+
+<mat-toolbar color="primary">
+  <span>Pokémon Battle Simulator</span>
+
+  <!-- **Added: Spacer to push buttons to the right** -->
+  <span class="spacer"></span>
+
+  <!-- **Added: Navigation Buttons** -->
+  <button mat-button routerLink="/battle" routerLinkActive="active-link">Battle</button>
+  <button mat-button routerLink="/history" routerLinkActive="active-link">History</button>
+</mat-toolbar>
+
+<!-- **Replaced static components with router outlet** -->
+<div class="main-container">
+  <router-outlet></router-outlet>
+</div>

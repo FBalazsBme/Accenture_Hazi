@@ -1,0 +1,35 @@
+<!-- src/app/components/pokemon-card/pokemon-card.component.html -->
+
+<mat-card class="pokemon-card">
+  <!-- **Spinner Overlay** -->
+  <div class="image-container">
+    <!-- Show image if available and not loading -->
+    <img
+      *ngIf="pokemon?.image && !isLoading"
+      mat-card-image
+      [src]="pokemon?.image"
+      [alt]="pokemon?.name || 'Nincs Pokemon'"
+      class="pokemon-image"
+    />
+
+    <!-- Show `Nincs Pokemon` text if image is not available -->
+    <div
+      *ngIf="!(pokemon?.image) && !isLoading"
+      class="no-image-placeholder">
+      Nincs Pokemon
+    </div>
+
+    <!-- Show spinner while loading -->
+    <mat-progress-spinner
+      *ngIf="isLoading"
+      class="pokemon-loading-spinner"
+      mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+
+  <mat-card-content>
+    <h2>{{ pokemon?.name | titlecase }}</h2>
+    <p>Típus: {{ pokemon?.type | titlecase }}</p>
+    <p>Erő: {{ pokemon?.strength }}</p>
+  </mat-card-content>
+</mat-card>

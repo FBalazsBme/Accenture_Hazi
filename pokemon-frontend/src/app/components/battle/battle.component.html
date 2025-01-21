@@ -1,0 +1,54 @@
+<!-- src/app/components/battle/battle.component.html -->
+
+<div class="battle-container">
+
+  <!-- **Error Message** -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- **Battle Result Display** -->
+  <div class="result-container">
+    <div class="pokemons">
+      <!-- First Pokémon Card -->
+      <app-pokemon-card
+        [pokemon]="battleResult ? pokemon1 : null"
+        [isLoading]="isLoading"
+        [ngClass]="{
+        'winner-card': battleResult && pokemon1?.name === battleResult?.winner?.name,
+        'loser-card': battleResult && pokemon1?.name !== battleResult?.winner?.name
+      }">
+      </app-pokemon-card>
+
+      <!-- Button placed between two Pokémon cards -->
+      <div class="button-container">
+        <button
+          class="original-button"
+          (click)="initiateBattle()"
+          [disabled]="isLoading">
+          {{ isLoading ? 'Küzdelem...' : 'Harc!' }}
+        </button>
+      </div>
+
+      <!-- Second Pokémon Card -->
+      <app-pokemon-card
+        [pokemon]="battleResult ? pokemon2 : null"
+        [isLoading]="isLoading"
+        [ngClass]="{
+        'winner-card': battleResult && pokemon2?.name === battleResult?.winner?.name,
+        'loser-card': battleResult && pokemon2?.name !== battleResult?.winner?.name
+      }">
+      </app-pokemon-card>
+    </div>
+
+    <!-- Winner Section -->
+    <div *ngIf="battleResult" class="winner">
+      <h3>Nyertes:</h3>
+      <app-pokemon-card
+        [pokemon]="battleResult.winner"
+        [isLoading]="false"
+        [ngClass]="'winner-card'">
+      </app-pokemon-card>
+    </div>
+  </div>
+</div>

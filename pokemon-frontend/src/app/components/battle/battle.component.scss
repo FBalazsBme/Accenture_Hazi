@@ -1,0 +1,120 @@
+
+
+.battle-container {
+  text-align: center;
+  margin: 20px;
+
+  .pokemons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .winner {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
+
+.original-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  text-decoration: none;
+  color: #0e30e2;
+  font-size: 18px;
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+  font-weight: bold;
+  transition: 0.3s;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
+  background-image: linear-gradient(180deg, rgba(233, 18, 18, 1) 4%, rgba(239, 130, 130, 1));
+}
+
+.original-button:hover {
+  transform: translateY(2px);
+  box-shadow: 0 0 rgba(0, 0, 0, 0);
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;    /* Center vertically */
+  width: 100%;            /* Take the full width of the viewport */
+  height: 100px;          /* Match the height of the button */
+}
+
+.winner-card {
+  border: 2px solid gold;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); /* Golden glow */
+}
+
+.loser-card {
+  border: 2px solid red;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Red glow */
+  opacity: 0.7; /* Slightly faded to emphasize loss */
+}
+
+.pokemon-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  text-align: center;
+  width: 200px; /* Adjust according to your card size */
+}
+
+.pokemon-image-container {
+  position: relative;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pokemon-loading-spinner {
+  width: 50px; /* Spinner size */
+  height: 50px;
+}
+
+.pokemon-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.pokemon-details {
+  margin-top: 8px;
+}
+.winner {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.winner app-pokemon-card {
+  display: flex; /* Flexbox to align content inside card */
+  justify-content: center; /* Ensures center alignment */
+  align-items: center; /* Centers items vertically (if needed) */
+  width: fit-content; /* Prevents app-pokemon-card from stretching full width */
+  margin: 0 auto; /* Centers the card horizontally in the winner section */
+}
+
+.winner app-pokemon-card mat-card {
+  display: inline-block; /* Ensures the card sizes correctly */
+  margin: 0; /* Removes unintended margins */
+}
