@@ -12,10 +12,15 @@ export class BattleService {
 
   constructor(private http: HttpClient) {}
 
-  simulateBattle(pokemon1Name: string, pokemon2Name: string): Observable<BattleResult> {
+  simulateBattle(pokemon1Name: string,
+                 pokemon2Name: string,
+                 strength1: number,
+                 strength2: number): Observable<BattleResult> {
     const params = new HttpParams()
       .set('pokemon1', pokemon1Name)
-      .set('pokemon2', pokemon2Name);
+      .set('pokemon2', pokemon2Name)
+      .set('strength1', strength1.toString())
+      .set('strength2', strength2.toString());
 
     return this.http.post<BattleResult>(`${this.apiUrl}/battle/simulate`, {}, { params });
   }

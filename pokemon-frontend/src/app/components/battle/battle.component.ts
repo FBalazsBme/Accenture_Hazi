@@ -38,7 +38,8 @@ export class BattleComponent {
         this.pokemon1 = pokemons[0];
         this.pokemon2 = pokemons[1];
 
-        this.battleService.simulateBattle(this.pokemon1.name, this.pokemon2.name).subscribe({
+        this.battleService.simulateBattle(this.pokemon1.name, this.pokemon2.name,
+          this.pokemon1.strength, this.pokemon2.strength).subscribe({
           next: (result) => {
             this.battleResult = result;
             this.isLoading = false;

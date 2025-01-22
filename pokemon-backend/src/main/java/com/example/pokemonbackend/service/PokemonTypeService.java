@@ -11,13 +11,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class TypeService {
+public class PokemonTypeService {
 
     private final RestTemplate restTemplate;
     private final String POKEAPI_BASE_URL = "https://pokeapi.co/api/v2/type/";
 
     @Autowired
-    public TypeService(RestTemplate restTemplate) {
+    public PokemonTypeService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 

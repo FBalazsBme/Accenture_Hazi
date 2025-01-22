@@ -14,13 +14,13 @@
     Nem talált ilyen harcot
   </div>
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="dataSource.data.length > 0">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="dataSource.data.length > 0" matSort>
 
     <!-- Pokémon 1 Column -->
     <ng-container matColumnDef="pokemon1">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Pokémon 1 </th>
       <td mat-cell *matCellDef="let battle">
-        {{ battle.pokemon1.name | titlecase }} ({{ battle.pokemon1.type }})
+        {{ battle?.pokemon1?.name | titlecase }} ({{ battle.pokemon1.type }})
       </td>
     </ng-container>
 
@@ -28,7 +28,7 @@
     <ng-container matColumnDef="pokemon2">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Pokémon 2 </th>
       <td mat-cell *matCellDef="let battle">
-        {{ battle.pokemon2.name | titlecase }} ({{ battle.pokemon2.type }})
+        {{ battle?.pokemon2?.name | titlecase }} ({{ battle.pokemon2.type }})
       </td>
     </ng-container>
 
@@ -36,7 +36,7 @@
     <ng-container matColumnDef="winner">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Nyertes </th>
       <td mat-cell *matCellDef="let battle">
-        {{ battle.winner | titlecase }}
+        {{ battle?.winner | titlecase }}
       </td>
     </ng-container>
 
@@ -44,7 +44,7 @@
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Dátum </th>
       <td mat-cell *matCellDef="let battle">
-        {{ battle.date | date:'short' }}
+        {{ battle?.date | date:'short' }}
       </td>
     </ng-container>
 
