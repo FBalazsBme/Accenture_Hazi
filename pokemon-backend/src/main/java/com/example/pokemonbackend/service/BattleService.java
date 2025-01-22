@@ -74,21 +74,22 @@ public class BattleService {
 
         boolean p1HasAdvantage = p1DoubleDamageTo.contains(p2Type);
         boolean p2HasAdvantage = p2DoubleDamageTo.contains(p1Type);
+        int p1Strength = p1.getStrength();
+        int p2Strength = p2.getStrength();
 
         if (p1HasAdvantage && !p2HasAdvantage) {
-            return p1;
+           p1Strength = p1Strength * 2;
         } else if (p2HasAdvantage && !p1HasAdvantage) {
+            p2Strength = p2Strength * 2;
+        }
+
+        if (p1Strength > p2Strength) {
+            return p1;
+        } else if (p2Strength > p1Strength) {
             return p2;
         } else {
 
-            if (p1.getStrength() > p2.getStrength()) {
-                return p1;
-            } else if (p2.getStrength() > p1.getStrength()) {
-                return p2;
-            } else {
-
-                return ThreadLocalRandom.current().nextBoolean() ? p1 : p2;
-            }
+            return ThreadLocalRandom.current().nextBoolean() ? p1 : p2;
         }
     }
 
