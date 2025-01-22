@@ -61,6 +61,6 @@ A Pokémon Harc Szimulátor egy webalkalmazás, amely lehetővé teszi a felhasz
 
 ### Backend telepítése
 
-1. Klónozd a repozitóriumot:
+1. Klónozd a repot:
    ```bash
    git clone <repo-url>
