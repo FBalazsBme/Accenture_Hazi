@@ -21,22 +21,24 @@ public class BattleService {
 
     private final PokemonService pokemonService;
     private final BattleHistoryRepository battleHistoryRepository;
-    private final TypeService typeService;
+    private final PokemonTypeService pokemonTypeService;
 
     @Autowired
     public BattleService(PokemonService pokemonService,
                          BattleHistoryRepository battleHistoryRepository,
-                         TypeService typeService) {
+                         PokemonTypeService pokemonTypeService) {
         this.pokemonService = pokemonService;
         this.battleHistoryRepository = battleHistoryRepository;
-        this.typeService = typeService;
+        this.pokemonTypeService = pokemonTypeService;
     }
 
-    public BattleResultDTO simulateBattle(String pokemon1Name, String pokemon2Name) {
+    public BattleResultDTO simulateBattle(String pokemon1, String pokemon2,
+                                          int strength1, int strength2) {
 
-        Pokemon p1 = pokemonService.getPokemonByName(pokemon1Name);
-        Pokemon p2 = pokemonService.getPokemonByName(pokemon2Name);
-
+        Pokemon p1 = pokemonService.getPokemonByName(pokemon1);
+        p1.setStrength(strength1);
+        Pokemon p2 = pokemonService.getPokemonByName(pokemon2);
+        p2.setStrength(strength2);
 
         Pokemon winner = determineWinner(p1, p2);
         ZonedDateTime battleDate = ZonedDateTime.now(ZoneOffset.UTC);
@@ -98,7 +100,7 @@ public class BattleService {
      */
     private Set<String> getTypeDoubleDamageTo(String type) {
         try {
-            TypeAdvantage typeAdvantage = typeService.getTypeAdvantage(type);
+            TypeAdvantage typeAdvantage = pokemonTypeService.getTypeAdvantage(type);
             return new HashSet<>(typeAdvantage.getDoubleDamageTo());
         } catch (Exception e) {
 

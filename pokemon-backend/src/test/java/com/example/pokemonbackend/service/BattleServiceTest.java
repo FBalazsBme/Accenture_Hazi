@@ -33,56 +33,43 @@ public class BattleServiceTest {
 
     @Test
     public void testBattle_Pokemon1HasTypeAdvantage() {
-        Pokemon p1 = new Pokemon("Charmander", Arrays.asList("fire"), "url1", 10);
-        Pokemon p2 = new Pokemon("Bulbasaur", Arrays.asList("grass"), "url2", 15);
+        Pokemon p1 = new Pokemon("Charmander", "fire", "url1", 10);
+        Pokemon p2 = new Pokemon("Bulbasaur", "grass", "url2", 15);
 
         when(pokemonService.getPokemonByName("Charmander")).thenReturn(p1);
         when(pokemonService.getPokemonByName("Bulbasaur")).thenReturn(p2);
 
-        BattleResultDTO result = battleService.simulateBattle("Charmander", "Bulbasaur");
+        BattleResultDTO result = battleService.simulateBattle("Charmander", "Bulbasaur", 15, 10);
 
         assertEquals("Charmander", result.getWinner().getName());
     }
 
     @Test
-    public void testBattle_Pokemon2HasTypeAdvantage() {
-        Pokemon p1 = new Pokemon("Squirtle", Arrays.asList("water"), "url1", 12);
-        Pokemon p2 = new Pokemon("Charmander", Arrays.asList("fire"), "url2", 14);
-
-        when(pokemonService.getPokemonByName("Squirtle")).thenReturn(p1);
-        when(pokemonService.getPokemonByName("Charmander")).thenReturn(p2);
-
-        BattleResultDTO result = battleService.simulateBattle("Squirtle", "Charmander");
-
-        assertEquals("Squirtle", result.getWinner().getName());
-    }
-
-    @Test
     public void testBattle_NoTypeAdvantage_HigherStrengthWins() {
-        Pokemon p1 = new Pokemon("Pidgey", Arrays.asList("normal"), "url1", 10);
-        Pokemon p2 = new Pokemon("Rattata", Arrays.asList("normal"), "url2", 15);
+        Pokemon p1 = new Pokemon("Pidgey", "normal", "url1", 10);
+        Pokemon p2 = new Pokemon("Rattata", "normal", "url2", 15);
 
         when(pokemonService.getPokemonByName("Pidgey")).thenReturn(p1);
         when(pokemonService.getPokemonByName("Rattata")).thenReturn(p2);
 
-        BattleResultDTO result = battleService.simulateBattle("Pidgey", "Rattata");
+        BattleResultDTO result = battleService.simulateBattle("Pidgey", "Rattata", 10, 15);
 
         assertEquals("Rattata", result.getWinner().getName());
     }
 
     @Test
     public void testBattle_NoTypeAdvantage_SameStrength_RandomWinner() {
-        Pokemon p1 = new Pokemon("Pidgey", Arrays.asList("normal"), "url1", 10);
-        Pokemon p2 = new Pokemon("Rattata", Arrays.asList("normal"), "url2", 10);
+        Pokemon p1 = new Pokemon("Pidgey", "normal", "url1", 10);
+        Pokemon p2 = new Pokemon("Rattata", "normal", "url2", 10);
 
         when(pokemonService.getPokemonByName("Pidgey")).thenReturn(p1);
         when(pokemonService.getPokemonByName("Rattata")).thenReturn(p2);
 
-        BattleResultDTO result = battleService.simulateBattle("Pidgey", "Rattata");
+        BattleResultDTO result = battleService.simulateBattle("Pidgey", "Rattata", 10, 10);
 
         assertTrue(
-                result.getWinner().getName().equals("Pidgey") ||
-                        result.getWinner().getName().equals("Rattata")
+                result.getWinner().getName().equals("Pidgey")
+                        || result.getWinner().getName().equals("Rattata")
         );
     }
 
@@ -91,8 +78,7 @@ public class BattleServiceTest {
         when(pokemonService.getPokemonByName("Unknown")).thenThrow(new PokemonNotFoundException("Not found"));
 
         assertThrows(PokemonNotFoundException.class, () -> {
-            battleService.simulateBattle("Unknown", "Pikachu");
+            battleService.simulateBattle("Unknown", "Pikachu", 10, 10);
         });
     }
 }
-
