@@ -8,6 +8,8 @@ import com.example.pokemonbackend.model.TypeAdvantage;
 import com.example.pokemonbackend.repository.BattleHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -18,6 +20,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class BattleService {
+
+    private static final Logger logger = LogManager.getLogger(BattleService.class);
 
     private final PokemonService pokemonService;
     private final BattleHistoryRepository battleHistoryRepository;
@@ -104,8 +108,7 @@ public class BattleService {
             TypeAdvantage typeAdvantage = pokemonTypeService.getTypeAdvantage(type);
             return new HashSet<>(typeAdvantage.getDoubleDamageTo());
         } catch (Exception e) {
-
-
+            logger.warn("could not get typeadvantage of Pokemon");
             return Collections.emptySet();
         }
     }
